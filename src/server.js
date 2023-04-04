@@ -10,7 +10,7 @@ router.use(express.json())
 router.use('/users', users)
 router.use(errorHandler())
 
-app.use('/api/v1', router)
+app.use('/api', router)
 
 app.use('*', (_req, res) =>
   res.status(400).send({ message: "Invalid endpoint" }))

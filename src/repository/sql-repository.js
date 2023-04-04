@@ -83,13 +83,23 @@ const SQLRepository = () => {
       .delete()
       .then()
   )
+
+  const getByLoginData = (username, password) => (
+    knex
+      .select('*')
+      .from('users')
+      .where({ username, password })
+      .then(handleNotFound(username))
+      .then(decodeUser)
+  )
   
   return {
     list,
     get,
     insert,
     update,
-    del
+    del,
+    getByLoginData
   }
 }
 

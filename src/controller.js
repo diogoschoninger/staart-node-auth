@@ -1,16 +1,20 @@
 import asyncErrorHandler from './middlewares/async-error.js'
 import UsersRepository from './repository/sql-repository.js'
+import encrypt from './utils/encrypt.js'
 
 const repository = UsersRepository()
 
 const user = {
   create: asyncErrorHandler(async (req, res) => {
-    const user = req.body
+    const user = {
+      ...req.body,
+      password: await encrypt(req.body.password)
+    }
 
-    const inserted = await repository.insert(user)
+    const { password, ...inserted } = await repository.insert(user)
 
     res.status(201)
-      .header('Location', `/api/v1/users/${inserted.id}`)
+      .header('Location', `/api/users/${inserted.id}`)
       .send(inserted)
   }),
 

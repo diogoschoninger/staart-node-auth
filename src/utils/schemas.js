@@ -4,7 +4,7 @@ export default {
   create: {
     body: Joi.object({
       username: Joi.string().email().required(),
-      password: Joi.string().min(5).max(40).required(),
+      password: Joi.string().min(5).max(255).required(),
       firstName: Joi.string().regex(/^[A-Za-z]+$/).required(),
       lastName: Joi.string().regex(/^[A-Za-z]+$/).required(),
     })
