@@ -19,7 +19,8 @@ const user = {
   }),
 
   list: asyncErrorHandler(async (_req, res) => {
-    const users = await repository.list()
+    const users = (await repository.list())
+      .map(({password, ...user}) => user)
     
     res.status(200).send(users)
   }),
@@ -27,7 +28,7 @@ const user = {
   get: asyncErrorHandler(async (req, res) => {
     const id = parseInt(req.params.id)
   
-    const user = await repository.get(id)
+    const { password, ...user } = await repository.get(id)
   
     res.status(200).send(user)
   }),
@@ -35,13 +36,16 @@ const user = {
   update: asyncErrorHandler(async (req, res) => {
     const id = parseInt(req.params.id)
   
-    const body = req.body
+    const body = {
+      ...req.body,
+      password: await encrypt(req.body.password)
+    }
   
     const registered = await repository.get(id)
   
     const user = { ...registered, ...body, id }
   
-    const updated = await repository.update(user)
+    const { password, ...updated } = await repository.update(user)
   
     res.status(200).send(updated)
   }),
