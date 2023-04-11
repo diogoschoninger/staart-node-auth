@@ -1,6 +1,5 @@
-import { createHash } from 'crypto'
+import { createHash } from "crypto";
 
-const encrypt = async data =>
-  createHash('sha256').update(data).digest('hex')
+const encrypt = async (data) => createHash("sha256").update(data).digest("hex");
 
-export default encrypt
+export default encrypt;
