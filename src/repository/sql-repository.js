@@ -24,7 +24,9 @@ const handleNotFound =
   (id) =>
   ([user]) =>
     user ??
-    Promise.reject(new NotFoundError({ resourceName: "user", resourceId: id }));
+    Promise.reject(
+      new NotFoundError({ resourceName: "user", resourceIdentifier: id })
+    );
 
 const handleUniqueUsernameError = (username) => (error) =>
   Promise.reject(
