@@ -52,6 +52,16 @@ const responseMappers = {
     },
   }),
 
+  UnauthorizedError: (error) => ({
+    status: 401,
+    body: {
+      statusCode: 401,
+      error: AuthenticationError.name,
+      message: error.message,
+      cause: "Invalid token",
+    },
+  }),
+
   default: (error) => ({
     status: 500,
     body: {
