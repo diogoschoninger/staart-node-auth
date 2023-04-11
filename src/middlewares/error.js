@@ -1,5 +1,6 @@
 import {
   AuthenticationError,
+  AuthorizationError,
   ConflictError,
   NotFoundError,
   ValidationError,
@@ -47,6 +48,16 @@ const responseMappers = {
     body: {
       statusCode: 401,
       error: AuthenticationError.name,
+      message: error.message,
+      cause: error.cause,
+    },
+  }),
+
+  [AuthorizationError.name]: (error) => ({
+    status: 403,
+    body: {
+      statusCode: 403,
+      error: AuthorizationError.name,
       message: error.message,
       cause: error.cause,
     },

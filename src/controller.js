@@ -1,10 +1,10 @@
+import jwt from "jsonwebtoken";
+import { jwtConfig } from "./config.js";
 import asyncErrorHandler from "./middlewares/async-error.js";
 import UsersRepository from "./repository/sql-repository.js";
 import encrypt from "./utils/encrypt.js";
+import { AuthenticationError, AuthorizationError } from "./utils/errors.js";
 import safeCompare from "./utils/safeCompare.js";
-import { AuthenticationError } from "./utils/errors.js";
-import jwt from "jsonwebtoken";
-import { jwtConfig } from "./config.js";
 
 const repository = UsersRepository();
 
@@ -42,6 +42,11 @@ const user = {
   update: asyncErrorHandler(async (req, res) => {
     const id = parseInt(req.params.id);
 
+    if (id !== req.auth.id)
+      throw new AuthorizationError(
+        "You are not authorized to update this user"
+      );
+
     const body = {
       ...req.body,
       password: await encrypt(req.body.password),
@@ -58,6 +63,11 @@ const user = {
 
   delete: asyncErrorHandler(async (req, res) => {
     const id = parseInt(req.params.id);
+
+    if (id !== req.auth.id)
+      throw new AuthorizationError(
+        "You are not authorized to delete this user"
+      );
 
     await repository.get(id);
 

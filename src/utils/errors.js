@@ -32,4 +32,18 @@ class AuthenticationError extends DomainError {
   }
 }
 
-export { NotFoundError, ValidationError, ConflictError, AuthenticationError };
+class AuthorizationError extends DomainError {
+  constructor(cause = "not specified") {
+    super("The user is not authorized");
+    this.name = this.constructor.name;
+    this.cause = cause;
+  }
+}
+
+export {
+  NotFoundError,
+  ValidationError,
+  ConflictError,
+  AuthenticationError,
+  AuthorizationError,
+};
