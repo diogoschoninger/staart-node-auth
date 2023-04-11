@@ -1,4 +1,5 @@
-## Comandos de migrations
+# Autorização e Autenticação em APIs NodeJS
 
-- Criar uma migration: `knex migrate:make [nome_da_migration] --knexfile=.knexfile.js`
-- Rodar as migrations: `knex migrate:latest --knexfile=.knexfile.js`
+Implementações realizadas durante o curso de Autorização de Autenticação em NodeJS, da plataforma Staart.
+
+Utilizada como base uma API desenvolvida no curso de Construção e consumo de REST APIs em NodeJS, também da Staart.

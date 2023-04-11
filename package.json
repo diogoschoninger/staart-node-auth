@@ -6,7 +6,9 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "_migrations-make": "knex migrate:make [nome_da_migration] --knexfile=.knexfile.js",
+    "migrations-execute": "knex migrate:latest --knexfile=.knexfile.js"
   },
   "devDependencies": {
     "joi": "^17.9.1",
